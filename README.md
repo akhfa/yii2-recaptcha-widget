@@ -4,7 +4,7 @@ Based on reCaptcha API 2.0.
 
 Installation
 ------------
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+Cara untuk menginstall yang paling mudah adalah menggunakan composer [composer](http://getcomposer.org/download/).
 
 * Either run
 
@@ -20,24 +20,22 @@ or add
 
 to the `require` section of your application's `composer.json` file.
 
-* [Sign up for an reCAPTCHA API keys](https://www.google.com/recaptcha/admin#createsite).
+* [Daftar dulu reCAPTCHA API keys](https://www.google.com/recaptcha/admin#createsite).
 
-* Configure the component in your configuration file (web.php). The parameters siteKey and secret are optional.
-But if you leave them out you need to set them in every validation rule and every view where you want to use this widget.
-If a siteKey or secret is set in an individual view or validation rule that would overrule what is set in the config.
+* Tambahkan ke file config/web.php
 
 ```php
 'components' => [
     'reCaptcha' => [
         'name' => 'reCaptcha',
         'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
-        'siteKey' => 'your siteKey',
-        'secret' => 'your secret key',
+        'siteKey' => 'siteKey setelah mendaftar',
+        'secret' => 'secret key setelah mendaftar',
     ],
     ...
 ```
 
-* Add `ReCaptchaValidator` in your model, for example:
+* Tambahkan `ReCaptchaValidator` pada model yang digunakan untuk formnya, contoh:
 
 ```php
 public $reCaptcha;
@@ -46,68 +44,29 @@ public function rules()
 {
   return [
       // ...
-      [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => 'your secret key']
+      [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className()]
   ];
 }
 ```
 
-or just
-
-```php
-public function rules()
-{
-  return [
-      // ...
-      [[], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => 'your secret key']
-  ];
-}
-```
-
-or simply
-
-```php
-public function rules()
-{
-  return [
-      // ...
-      [[], \himiklab\yii2\recaptcha\ReCaptchaValidator::className()]
-  ];
-}
-```
-
-Usage
+Pemakaian
 -----
-For example:
+Tambahkan kode berikut ke form yang akan ditambahkan captcha
 
 ```php
 <?= $form->field($model, 'reCaptcha')->widget(
-    \himiklab\yii2\recaptcha\ReCaptcha::className(),
-    ['siteKey' => 'your siteKey']
+    \himiklab\yii2\recaptcha\ReCaptcha::className()
 ) ?>
 ```
 
-or
+atau
 
 ```php
 <?= \himiklab\yii2\recaptcha\ReCaptcha::widget([
     'name' => 'reCaptcha',
-    'siteKey' => 'your siteKey',
     'widgetOptions' => ['class' => 'col-sm-offset-3']
 ]) ?>
 ```
-
-or
-
-```php
-<?= $form->field($model, 'reCaptcha')->widget(\himiklab\yii2\recaptcha\ReCaptcha::className()) ?>
-```
-
-or simply
-
-```php
-<?= \himiklab\yii2\recaptcha\ReCaptcha::widget(['name' => 'reCaptcha']) ?>
-```
-
 Resources
 ---------
 * [Google reCAPTCHA](https://developers.google.com/recaptcha)
